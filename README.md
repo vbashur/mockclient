@@ -1,3 +1,3 @@
 # Mock client
 
- Mock client to execute rest requests within authentication routine
+ Mock client which executes simple REST request within authentication routine

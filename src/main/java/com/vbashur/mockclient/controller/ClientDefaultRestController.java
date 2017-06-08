@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -18,17 +20,19 @@ public class ClientDefaultRestController {
     @RequestMapping("/")
     @ResponseBody
     public String getMainView() {
-        return "Hi there!";
+        return "Mock client for auth requests";
     }
 
-    @RequestMapping("/auth")
+    @RequestMapping(value="/auth", method=RequestMethod.GET)
     @ResponseBody
-    public String auth() {
+    public String auth(@RequestParam("target") String target,
+                       @RequestParam("user") String user,
+                       @RequestParam("password") String password) {
         RestTemplate restTemplate = restTemplateFactory.getObject();
         restTemplate.getInterceptors().add(
-                new BasicAuthorizationInterceptor("username", "password"));
+                new BasicAuthorizationInterceptor(user, password));
         restTemplate.exchange(
-                "http://localhost:8080/spring-security-rest-template/api/foos/1",
+                target,
                 HttpMethod.GET, null, Void.class); //TODO
 
         return "Request was sent";
