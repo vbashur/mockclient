@@ -18,7 +18,7 @@ public class ClientDefaultRestControllerIntegrationTest {
 
     @Test
     public void testAuth() {
-        //TODO
-//        controller.auth("http://www.yandex.ru", "user", "password");
+//TODO fetch URL and credentials from cfg server
+        controller.auth("http://localhost:8091/auth/index", "admin", "admin");
     }
 }
